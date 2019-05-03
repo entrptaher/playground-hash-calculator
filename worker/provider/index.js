@@ -9,8 +9,8 @@ const queue = new Queue("hasher", config.redis);
 const worker = new Queue("worker", config.redis);
 const server = new Queue("server", config.redis);
 
-async function newHasher() {
-  const uuid = short().new();
+async function newHasher(dbResult) {
+  const uuid = dbResult._id;
   const job = await queue.add({ uuid });
 
   const getSocket = require("../socket/client");

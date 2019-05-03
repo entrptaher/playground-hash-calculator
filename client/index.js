@@ -30,7 +30,7 @@ class HelloMessage extends React.Component {
   };
 
   addOne = async () => {
-    const data = await asyncSocket("addOne");
+    await asyncSocket("addOne");
     await this.getAll()
   };
 

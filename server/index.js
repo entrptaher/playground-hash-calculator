@@ -13,19 +13,16 @@ const db = new Datastore({
 });
 
 server.process(async job => {
-  io.emit("timer", job.data.hash);
+  await db.update({ _id: job.data.uuid }, { $set: { hash: job.data.hash } });
+  const data = await db.findOne({ _id: job.data.uuid });
+  io.emit("singleHash", { id: job.data.uuid, data });
 });
 
 // connection handlers
 io.on("connection", client => {
-  let counterInterval;
-
-  client.on("subscribeToTimer", interval =>
-    worker.add({ time: Date.now(), interval })
-  );
-
   client.on("addOne", async (data, callback) => {
     const result = await db.insert({});
+    worker.add(result);
     callback(result);
   });
 
@@ -35,25 +32,12 @@ io.on("connection", client => {
   });
 
   client.on("disconnect", () => {
-    console.log('disconnecting interval')
-    clearInterval(counterInterval);
+    console.log("disconnecting interval");
   });
 
   client.on("init", async (data, callback) => {
     const result = await db.find({});
     callback(result);
-
-    if (!counterInterval) {
-      counterInterval = setInterval(async () => {
-        const resultInterval = await db.find({});
-        for (let hasher of resultInterval) {
-          const hash = Date.now();
-          await db.update({ _id: hasher._id }, { $set: { hash } });
-          const data = await db.findOne({ _id: hasher._id });
-          io.emit("singleHash", { id: hasher._id, data });
-        }
-      }, 1000);
-    }
   });
 });
 
