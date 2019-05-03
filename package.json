@@ -1,0 +1,30 @@
+{
+  "name": "socket-worker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:client": "parcel client/index.html",
+    "start:server": "node server/index.js"
+  },
+  "dependencies": {
+    "antd": "^3.16.6",
+    "body-parser": "^1.19.0",
+    "bull": "^3.8.1",
+    "chance": "^1.0.18",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.5",
+    "nedb": "^1.8.0",
+    "p-cancelable": "^2.0.0",
+    "p-queue": "^5.0.0",
+    "parcel-bundler": "^1.12.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-syntax-async-generators": "^7.2.0"
+  }
+}
