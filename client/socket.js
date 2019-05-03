@@ -1,7 +1,17 @@
-import openSocket from 'socket.io-client';
-const  socket = openSocket('http://localhost:8000');
+const io = require('socket.io-client');
+
+const socket = io(`http://${config.host}:${config.ports.ws}`, {
+  transports: ['websocket'], // Only websocket works
+});
+
+const asyncSocket = async (channel, msg) =>
+  new Promise(resolve => {
+    socket.emit(channel, msg, data => resolve(data));
+  });
+
 function subscribeToTimer(cb) {
-  socket.on('timer', timestamp => cb(timestamp));
-  socket.emit('subscribeToTimer', 1000);
+  socket.on("timer", timestamp => cb(timestamp));
+  socket.emit("subscribeToTimer", 1000);
 }
-export { subscribeToTimer };
+
+export { subscribeToTimer, asyncSocket };
