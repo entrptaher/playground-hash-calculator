@@ -14,4 +14,4 @@ function subscribeToTimer(cb) {
   socket.on("singleHash", payload => cb(payload));
 }
 
-export { subscribeToTimer, asyncSocket };
+export { subscribeToTimer, asyncSocket, socket };

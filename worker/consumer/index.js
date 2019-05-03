@@ -17,6 +17,7 @@ function processFakeWork({ socket, job }) {
       uuid,
       hash: guid,
       from: "consumer",
+      consumerId: socket.io.engine.id,
       to: "provider"
     });
 

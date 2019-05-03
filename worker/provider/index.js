@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require("../config");
 console.log("producer online");
 
 const short = require("short-uuid");
@@ -29,11 +29,14 @@ async function newHasher(dbResult) {
 
   socket.on("hash", payload => {
     if (payload.from === "consumer") {
-      server.add(payload);
+      const newData = Object.assign({}, payload, {
+        producerId: socket.io.engine.id
+      });
+      server.add(newData);
     }
   });
 }
 
-worker.process(async(job)=>{
+worker.process(async job => {
   newHasher(job.data);
-})
+});

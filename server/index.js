@@ -13,9 +13,10 @@ const db = new Datastore({
 });
 
 server.process(async job => {
-  await db.update({ _id: job.data.uuid }, { $set: { hash: job.data.hash } });
-  const data = await db.findOne({ _id: job.data.uuid });
-  io.emit("singleHash", { id: job.data.uuid, data });
+  const { uuid, consumerId, producerId, hash } = job.data;
+  await db.update({ _id: uuid }, { $set: { hash, consumerId, producerId } });
+  const data = await db.findOne({ _id: uuid });
+  io.emit("singleHash", { id: uuid, data });
 });
 
 // connection handlers
