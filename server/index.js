@@ -58,6 +58,6 @@ io.on("connection", client => {
 });
 
 // initialize the listener
-const port = 8000;
+const port = config.ports.ws;
 io.listen(port);
 console.log("listening on port ", port);

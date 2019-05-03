@@ -35,6 +35,5 @@ async function newHasher() {
 }
 
 worker.process(async(job)=>{
-  console.log(job);
   newHasher(job.data);
 })

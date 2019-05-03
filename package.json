@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm-run-all --parallel start:**",
     "start:client": "cd client && parcel index.html",
-    "start:server": "cd server && node index.js",
-    "start:worker": "cd worker && node index.js"
+    "start:server": "cd server && nodemon index.js",
+    "start:worker": "cd worker && nodemon index.js"
   },
   "dependencies": {
     "antd": "^3.16.6",
