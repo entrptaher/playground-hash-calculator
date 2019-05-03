@@ -11,8 +11,7 @@ const asyncSocket = async (channel, msg) =>
   });
 
 function subscribeToTimer(cb) {
-  socket.on("timer", timestamp => cb(timestamp));
-  socket.emit("subscribeToTimer", 1000);
+  socket.on("singleHash", payload => cb(payload));
 }
 
 export { subscribeToTimer, asyncSocket };

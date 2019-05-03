@@ -21,7 +21,7 @@ function processFakeWork({ socket, job }) {
     });
 
     ++hashCount;
-    if (hashCount >= 5) {
+    if (hashCount >= 10) {
       clearInterval(hashInterval);
       socket.emit("leave", {
         uuid,
@@ -31,7 +31,7 @@ function processFakeWork({ socket, job }) {
         to: "provider"
       });
     }
-  }, 100);
+  }, 1000);
 }
 
 queue.process(async function process(job) {
