@@ -5,6 +5,10 @@ const short = require("short-uuid");
 const Queue = require("bull");
 const queue = new Queue("hasher", config.redis);
 
+// messengers, talks with the server and act as main worker queue
+const worker = new Queue("worker", config.redis);
+const server = new Queue("server", config.redis);
+
 async function newHasher() {
   const uuid = short().new();
   const job = await queue.add({ uuid });
@@ -25,9 +29,12 @@ async function newHasher() {
 
   socket.on("hash", payload => {
     if (payload.from === "consumer") {
-      console.log(socket.id, payload);
+      server.add(payload);
     }
   });
 }
 
-newHasher();
+worker.process(async(job)=>{
+  console.log(job);
+  newHasher(job.data);
+})

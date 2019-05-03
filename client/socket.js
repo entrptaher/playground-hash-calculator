@@ -1,4 +1,5 @@
 const io = require('socket.io-client');
+const config = require('./config');
 
 const socket = io(`http://${config.host}:${config.ports.ws}`, {
   transports: ['websocket'], // Only websocket works
